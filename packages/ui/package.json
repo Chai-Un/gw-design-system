@@ -1,6 +1,6 @@
 {
   "name": "@gw/ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared component library built with React, TypeScript, and Tailwind",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
