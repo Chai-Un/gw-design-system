@@ -1,0 +1,26 @@
+{
+  "name": "@gw/tokens",
+  "version": "0.1.0",
+  "description": "Design tokens and adapters for Tailwind v3 and v4",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./preset": "./dist/preset.js",
+    "./theme.css": "./dist/theme.css"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean && tsx scripts/build.ts",
+    "dev": "tsx scripts/build.ts --watch"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
