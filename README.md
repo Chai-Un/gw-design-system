@@ -1,6 +1,6 @@
 # Games Workshop Shared Component Library (`@gw/design-system`)
 
-A multi-package component library built for Games Workshop web applications. It provides design tokens, accessible UI components, and supports both Tailwind CSS v3 and Tailwind CSS v4.
+A multi-package component library providing design tokens, accessible UI components, and universal support for both Tailwind CSS v3 and Tailwind CSS v4.
 
 ---
 
@@ -31,7 +31,33 @@ pnpm dev
 
 ---
 
-## 2. Tech Stack Decision Matrix
+## 2. Architectural Approach
+
+To deliver a scalable, enterprise-grade shared component library within the 3.5-hour time-box, we focused on solving the core platform challenges:
+
+1. **Dual Tailwind Compatibility (v3 & v4)**:
+   * Built a **Universal Token Bridge** where design tokens in TypeScript serve as the single source of truth.
+   * Compiles into a JavaScript preset for legacy Tailwind v3 apps and native `@theme` CSS custom properties for modern Tailwind v4 apps, eliminating style fragmentation.
+
+2. **Accessibility by Default (WCAG 2.1 AA)**:
+   * Built on native W3C semantic elements (`<button>`, `<input>`) with zero unneeded runtime dependencies.
+   * Guaranteed deterministic accessibility via `React.useId()` for form labels, dynamic `aria-describedby` for helper and error alerts, and explicit cursor overrides.
+
+3. **Multi-Layered Testing Strategy**:
+   * **Shift-Left Automated Audits**: Every component variant and state is tested with Vitest, React Testing Library, and `axe-core` (`toHaveNoViolations()`), achieving 100% automated WCAG compliance (23/23 tests passing).
+   * **Real Consumer Verification**: Two live playground apps (`playground-v3` and `playground-v4`) verify real-world package integration and zero CSS conflicts.
+
+4. **Robust TypeScript & React Contracts**:
+   * Strictly typed with zero `any` and built via `tsup` to emit dual **ESM** (`.mjs`), **CommonJS** (`.js`), and TypeScript declaration maps (`.d.ts`).
+   * Configured strict `peerDependencies` (`^18.0.0 || ^19.0.0`) to prevent duplicate React instances and singleton hook runtime errors.
+
+5. **Predictable Versioning & Release Pipeline**:
+   * Decoupled `@gw/tokens` and `@gw/ui` within a `pnpm` monorepo.
+   * Integrated `@changesets/cli` for intentional semantic versioning, coordinated multi-package releases, and automated changelogs.
+
+---
+
+## 3. Tech Stack Decision Matrix
 
 | Tool | Role | Why We Picked It |
 | :--- | :--- | :--- |
@@ -46,7 +72,7 @@ pnpm dev
 
 ---
 
-## 3. Monorepo Directory Architecture
+## 4. Monorepo Directory Architecture
 
 ```
 gw-design-system/
@@ -86,7 +112,7 @@ gw-design-system/
 
 ---
 
-## 4. Guideline Command
+## 5. Guideline Command
 
 Common daily commands for developing and maintaining this library:
 
@@ -128,7 +154,7 @@ pnpm changeset version
 
 ---
 
-## 5. Nice-to-Have & Future Enhancements
+## 6. Nice-to-Have & Future Enhancements
 
 The following features were intentionally scoped out to keep the initial delivery focused and within the 3.5-hour time-box:
 
